@@ -1,7 +1,7 @@
 package rs.raf.demo.filters;
 
 import rs.raf.demo.resources.SubjectResource;
-import rs.raf.demo.services.UserService;
+//import rs.raf.demo.services.UserService;
 
 import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -14,8 +14,8 @@ import java.util.List;
 @Provider
 public class AuthFilter implements ContainerRequestFilter {
 
-    @Inject
-    UserService userService;
+//    @Inject
+//    UserService userService;
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
@@ -32,9 +32,9 @@ public class AuthFilter implements ContainerRequestFilter {
                 token = token.replace("Bearer ", "");
             }
 
-            if (!this.userService.isAuthorized(token)) {
-                requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
-            }
+//            if (!this.userService.isAuthorized(token)) {
+//                requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+//            }
         } catch (Exception exception) {
             requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
         }

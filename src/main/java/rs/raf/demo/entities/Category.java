@@ -4,17 +4,37 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class Category {
-  @NotNull(message = "Title field is required")
-  @NotEmpty(message = "Title field is required")
+  @NotNull(message = "Id field is required")
+  private Integer id;
+
+  @NotNull(message = "Name field is required")
+  @NotEmpty(message = "Name field is required")
   private String name;
 
-  @NotNull(message = "Title field is required")
-  @NotEmpty(message = "Title field is required")
+  @NotNull(message = "Description field is required")
+  @NotEmpty(message = "Description field is required")
   private String description;
 
-  public Category(String name, String description) {
+  public Category() {}
+
+  public Category(Integer id) {
+    this.id = id;
+    this.name = "nesto";
+    this.description = "opis nesto";
+  }
+
+  public Category(Integer id, String name, String description) {
+    this.id = id;
     this.name = name;
     this.description = description;
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getName() {

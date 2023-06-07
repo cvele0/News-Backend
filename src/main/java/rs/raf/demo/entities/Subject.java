@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 
 public class Subject {
-
+    @NotNull(message = "Id field is required")
     private Integer id;
 
     @NotNull(message = "Title field is required")

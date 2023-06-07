@@ -5,14 +5,28 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class Tag {
-  @NotNull(message = "Title field is required")
-  @NotEmpty(message = "Title field is required")
+  @NotNull(message = "Id field is required")
+  private Integer id;
+
+  @NotNull(message = "Name field is required")
+  @NotEmpty(message = "Name field is required")
   private String name;
 
   private List<News> news;
 
-  public Tag(String name) {
+  public Tag() {}
+
+  public Tag(Integer id, String name) {
+    this.id = id;
     this.name = name;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public Integer getId() {
+    return id;
   }
 
   public String getName() {

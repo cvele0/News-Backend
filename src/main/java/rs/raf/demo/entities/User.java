@@ -4,37 +4,51 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class User {
-    @NotNull(message = "Title field is required")
-    @NotEmpty(message = "Title field is required")
+    @NotNull(message = "Id field is required")
+    private Integer id;
+
+    @NotNull(message = "Name field is required")
+    @NotEmpty(message = "Name field is required")
     private String name;
 
-    @NotNull(message = "Title field is required")
-    @NotEmpty(message = "Title field is required")
+    @NotNull(message = "Surname field is required")
+    @NotEmpty(message = "Surname field is required")
     private String surname;
 
-    @NotNull(message = "Title field is required")
-    @NotEmpty(message = "Title field is required")
+    @NotNull(message = "Email field is required")
+    @NotEmpty(message = "Email field is required")
     private String email;
 
-    @NotNull(message = "Title field is required")
-    @NotEmpty(message = "Title field is required")
+    @NotNull(message = "Type field is required")
+    @NotEmpty(message = "Type field is required")
     private String type;
 
-    @NotNull(message = "Title field is required")
-    @NotEmpty(message = "Title field is required")
+    @NotNull(message = "Status field is required")
+    @NotEmpty(message = "Status field is required")
     private String status;
 
-    @NotNull(message = "Title field is required")
-    @NotEmpty(message = "Title field is required")
+    @NotNull(message = "Hashed Password field is required")
+    @NotEmpty(message = "Hashed Password field is required")
     private String hashedPassword;
 
-    public User(String name, String surname, String email, String type, String status, String hashedPassword) {
+    public User() {}
+
+    public User(Integer id, String name, String surname, String email, String type, String status, String hashedPassword) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.type = type;
         this.status = status;
         this.hashedPassword = hashedPassword;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {

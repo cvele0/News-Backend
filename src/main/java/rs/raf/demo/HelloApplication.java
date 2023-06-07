@@ -3,13 +3,13 @@ package rs.raf.demo;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
-import rs.raf.demo.repositories.subject.InMemorySubjectRepository;
+import rs.raf.demo.repositories.news.MySqlNewsRepository;
+import rs.raf.demo.repositories.news.NewsRepository;
 import rs.raf.demo.repositories.subject.MySqlSubjectRepository;
 import rs.raf.demo.repositories.subject.SubjectRepository;
-import rs.raf.demo.repositories.user.InMemoryUserRepository;
-import rs.raf.demo.repositories.user.UserRepository;
+import rs.raf.demo.services.NewsService;
 import rs.raf.demo.services.SubjectService;
-import rs.raf.demo.services.UserService;
+//import rs.raf.demo.services.UserService;
 
 import javax.inject.Singleton;
 import javax.ws.rs.ApplicationPath;
@@ -26,12 +26,14 @@ public class HelloApplication extends ResourceConfig {
             @Override
             protected void configure() {
                 this.bind(MySqlSubjectRepository.class).to(SubjectRepository.class).in(Singleton.class);
+                this.bind(MySqlNewsRepository.class).to(NewsRepository.class).in(Singleton.class);
 
-                this.bind(InMemoryUserRepository.class).to(UserRepository.class).in(Singleton.class);
+//                this.bind(InMemoryUserRepository.class).to(UserRepository.class).in(Singleton.class);
 
 
                 this.bindAsContract(SubjectService.class);
-                this.bindAsContract(UserService.class);
+//                this.bindAsContract(UserService.class);
+                this.bindAsContract(NewsService.class);
 
             }
         };

@@ -5,24 +5,41 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 
 public class Comment {
-  @NotNull(message = "Title field is required")
-  @NotEmpty(message = "Title field is required")
+  @NotNull(message = "Id field is required")
+  private Integer id;
+
+  @NotNull(message = "Author field is required")
+  @NotEmpty(message = "Author field is required")
   private String author;
 
-  @NotNull(message = "Title field is required")
-  @NotEmpty(message = "Title field is required")
+  @NotNull(message = "Text field is required")
+  @NotEmpty(message = "Text field is required")
   private String text;
 
-  @NotNull(message = "Title field is required")
-  @NotEmpty(message = "Title field is required")
-  private LocalTime timeCreated;
+  @NotNull(message = "Time Created field is required")
+  @NotEmpty(message = "Time Created field is required")
+  private String timeCreated;
 
+  @NotNull(message = "News field is required")
+  @NotEmpty(message = "News field is required")
   private News news;
 
-  public Comment(String author, String text, LocalTime timeCreated) {
+  public Comment() {}
+
+  public Comment(Integer id, String author, String text, String timeCreated, News news) {
+    this.id = id;
     this.author = author;
     this.text = text;
     this.timeCreated = timeCreated;
+    this.news = news;
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getAuthor() {
@@ -41,11 +58,11 @@ public class Comment {
     this.text = text;
   }
 
-  public LocalTime getTimeCreated() {
+  public String getTimeCreated() {
     return timeCreated;
   }
 
-  public void setTimeCreated(LocalTime timeCreated) {
+  public void setTimeCreated(String timeCreated) {
     this.timeCreated = timeCreated;
   }
 
