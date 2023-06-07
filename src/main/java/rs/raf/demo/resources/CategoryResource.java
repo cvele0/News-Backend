@@ -1,9 +1,7 @@
 package rs.raf.demo.resources;
 
 import rs.raf.demo.entities.Category;
-import rs.raf.demo.entities.News;
 import rs.raf.demo.services.CategoryService;
-import rs.raf.demo.services.NewsService;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -11,7 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/category")
+@Path("/categories")
 public class CategoryResource {
 
   @Inject

@@ -9,9 +9,12 @@ import rs.raf.demo.repositories.news.MySqlNewsRepository;
 import rs.raf.demo.repositories.news.NewsRepository;
 import rs.raf.demo.repositories.subject.MySqlSubjectRepository;
 import rs.raf.demo.repositories.subject.SubjectRepository;
+import rs.raf.demo.repositories.user.MySqlUserRepository;
+import rs.raf.demo.repositories.user.UserRepository;
 import rs.raf.demo.services.CategoryService;
 import rs.raf.demo.services.NewsService;
 import rs.raf.demo.services.SubjectService;
+import rs.raf.demo.services.UserService;
 //import rs.raf.demo.services.UserService;
 
 import javax.inject.Singleton;
@@ -31,15 +34,12 @@ public class HelloApplication extends ResourceConfig {
                 this.bind(MySqlSubjectRepository.class).to(SubjectRepository.class).in(Singleton.class);
                 this.bind(MySqlNewsRepository.class).to(NewsRepository.class).in(Singleton.class);
                 this.bind(MySqlCategoryRepository.class).to(CategoryRepository.class).in(Singleton.class);
-
-//                this.bind(InMemoryUserRepository.class).to(UserRepository.class).in(Singleton.class);
-
+                this.bind(MySqlUserRepository.class).to(UserRepository.class).in(Singleton.class);
 
                 this.bindAsContract(SubjectService.class);
-//                this.bindAsContract(UserService.class);
                 this.bindAsContract(NewsService.class);
                 this.bindAsContract(CategoryService.class);
-
+                this.bindAsContract(UserService.class);
             }
         };
         register(binder);

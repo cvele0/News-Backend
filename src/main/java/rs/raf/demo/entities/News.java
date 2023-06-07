@@ -2,8 +2,6 @@ package rs.raf.demo.entities;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class News {
@@ -25,12 +23,12 @@ public class News {
   @NotEmpty(message = "Author field is required")
   private String author;
 
+  private int viewCount;
+
   private List<Comment> comments;
 
   private List<Tag> tags;
 
-//  @NotNull(message = "Title field is required")
-//  @NotEmpty(message = "Title field is required")
   private Category category;
 
   public News() {}
@@ -42,6 +40,7 @@ public class News {
     this.timeCreated = timeCreated;
     this.author = author;
     this.category = category;
+    this.viewCount = 0;
   }
 
   //2nd version
@@ -51,7 +50,6 @@ public class News {
     this.text = text;
     this.timeCreated = timeCreated;
     this.author = author;
-    this.category = category;
   }
 
   public void setId(Integer id) {

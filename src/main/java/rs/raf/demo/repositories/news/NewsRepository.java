@@ -5,8 +5,8 @@ import rs.raf.demo.entities.News;
 import java.util.List;
 
 public interface NewsRepository {
-  public News addNews(News news);
-  public List<News> allNews();
-//  public News findNews(Integer id);
-  public void deleteNews(Integer id);
+  News addNews(News news);
+  List<News> allNews();
+//  News findNews(Integer id);
+  void deleteNews(Integer id);
 }
