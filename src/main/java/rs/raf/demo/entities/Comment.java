@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 
 public class Comment {
-  @NotNull(message = "Id field is required")
   private Integer id;
 
   @NotNull(message = "Author field is required")

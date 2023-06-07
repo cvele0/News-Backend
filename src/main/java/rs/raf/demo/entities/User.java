@@ -4,7 +4,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class User {
-    @NotNull(message = "Id field is required")
     private Integer id;
 
     @NotNull(message = "Name field is required")

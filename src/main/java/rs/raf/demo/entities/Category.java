@@ -4,7 +4,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class Category {
-  @NotNull(message = "Id field is required")
   private Integer id;
 
   @NotNull(message = "Name field is required")
@@ -19,8 +18,6 @@ public class Category {
 
   public Category(Integer id) {
     this.id = id;
-    this.name = "nesto";
-    this.description = "opis nesto";
   }
 
   public Category(Integer id, String name, String description) {

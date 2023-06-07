@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class Tag {
-  @NotNull(message = "Id field is required")
   private Integer id;
 
   @NotNull(message = "Name field is required")

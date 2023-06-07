@@ -1,4 +1,4 @@
-package rs.raf.demo.repositories.news;
+package rs.raf.demo.repositories.category;
 
 import rs.raf.demo.entities.Category;
 import rs.raf.demo.entities.News;
@@ -8,10 +8,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySqlNewsRepository extends MySqlAbstractRepository implements NewsRepository {
-
+public class MySqlCategoryRepository extends MySqlAbstractRepository implements CategoryRepository {
   @Override
-  public News addNews(News news) {
+  public Category addCategory(Category category) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -20,23 +19,14 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
 
       String[] generatedColumns = {"id"};
 
-//      preparedStatement = connection.prepareStatement("INSERT INTO news (title, text, time_created, author) VALUES(?, ?, ?, ?)", generatedColumns);
-      preparedStatement = connection.prepareStatement("INSERT INTO news (title, text, time_created, author, category_id) VALUES(?, ?, ?, ?, ?)", generatedColumns);
-      preparedStatement.setString(1, news.getTitle());
-      preparedStatement.setString(2, news.getText());
-      preparedStatement.setString(3, news.getTimeCreated());
-      preparedStatement.setString(4, news.getAuthor());
-      //change this line
-      preparedStatement.setInt(5, 1);
-
-      //TODO change this category
-      news.setCategory(new Category(0));
-
+      preparedStatement = connection.prepareStatement("INSERT INTO category (name, description) VALUES(?, ?)", generatedColumns);
+      preparedStatement.setString(1, category.getName());
+      preparedStatement.setString(2, category.getDescription());
       preparedStatement.executeUpdate();
       resultSet = preparedStatement.getGeneratedKeys();
 
       if (resultSet.next()) {
-        news.setId(resultSet.getInt(1));
+        category.setId(resultSet.getInt(1));
       }
 
     } catch (SQLException e) {
@@ -47,12 +37,12 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
       this.closeConnection(connection);
     }
 
-    return news;
+    return category;
   }
 
   @Override
-  public List<News> allNews() {
-    List<News> news = new ArrayList<>();
+  public List<Category> allCategories() {
+    List<Category> categories = new ArrayList<>();
 
     Connection connection = null;
     Statement statement = null;
@@ -60,14 +50,13 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
     try {
       connection = this.newConnection();
 
-      //TODO dodati kategoriju
       statement = connection.createStatement();
-      resultSet = statement.executeQuery("select * from news");
+      resultSet = statement.executeQuery("select * from category");
       while (resultSet.next()) {
-        news.add(new News(resultSet.getInt("id"), resultSet.getString("title"),
-                resultSet.getString("text"),
-                resultSet.getString("time_created"),
-                resultSet.getString("author")));
+        categories.add(new Category(
+                resultSet.getInt("id"),
+                resultSet.getString("name"),
+                resultSet.getString("description")));
       }
 
     } catch (Exception e) {
@@ -78,17 +67,17 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
       this.closeConnection(connection);
     }
 
-    return news;
+    return categories;
   }
 
   @Override
-  public void deleteNews(Integer id) {
+  public void deleteCategory(Integer id) {
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     try {
       connection = this.newConnection();
 
-      preparedStatement = connection.prepareStatement("DELETE FROM news where id = ?");
+      preparedStatement = connection.prepareStatement("DELETE FROM category where id = ?");
       preparedStatement.setInt(1, id);
       preparedStatement.executeUpdate();
 

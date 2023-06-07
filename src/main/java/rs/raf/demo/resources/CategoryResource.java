@@ -1,6 +1,8 @@
 package rs.raf.demo.resources;
 
+import rs.raf.demo.entities.Category;
 import rs.raf.demo.entities.News;
+import rs.raf.demo.services.CategoryService;
 import rs.raf.demo.services.NewsService;
 
 import javax.inject.Inject;
@@ -9,22 +11,22 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/news")
-public class NewsResource {
+@Path("/category")
+public class CategoryResource {
 
   @Inject
-  private NewsService newsService;
+  private CategoryService categoryService;
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public Response all() {
-    return Response.ok(this.newsService.allNews()).build();
+    return Response.ok(this.categoryService.allCategories()).build();
   }
 
   @POST
   @Produces(MediaType.APPLICATION_JSON)
-  public News create(@Valid News news) {
-    return this.newsService.addNews(news);
+  public Category create(@Valid Category category) {
+    return this.categoryService.addCategory(category);
   }
 
 //  @GET
@@ -37,6 +39,6 @@ public class NewsResource {
   @DELETE
   @Path("/{id}")
   public void delete(@PathParam("id") Integer id) {
-    this.newsService.deleteNews(id);
+    this.categoryService.deleteCategory(id);
   }
 }
