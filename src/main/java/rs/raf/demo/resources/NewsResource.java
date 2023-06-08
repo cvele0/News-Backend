@@ -39,4 +39,25 @@ public class NewsResource {
   public void delete(@PathParam("id") Integer id) {
     this.newsService.deleteNews(id);
   }
+
+  @GET
+  @Path("/lastTen")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response lastTen() {
+    return Response.ok(this.newsService.lastTen()).build();
+  }
+
+  @GET
+  @Path("/mostRead")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response mostRead() {
+    return Response.ok(this.newsService.mostRead()).build();
+  }
+
+  @GET
+  @Path("/byCategory/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response byCategory(@PathParam("id") Integer id) {
+    return Response.ok(this.newsService.byCategory(id)).build();
+  }
 }

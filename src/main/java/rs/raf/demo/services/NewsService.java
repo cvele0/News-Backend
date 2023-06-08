@@ -30,4 +30,13 @@ public class NewsService {
   public void deleteNews(Integer id) {
     this.newsRepository.deleteNews(id);
   }
+  public List<News> lastTen() {
+    return this.newsRepository.lastTen();
+  }
+  public List<News> mostRead() {
+    return this.newsRepository.mostRead();
+  }
+  public List<News> byCategory(Integer id) {
+    return this.newsRepository.byCategory(id);
+  }
 }

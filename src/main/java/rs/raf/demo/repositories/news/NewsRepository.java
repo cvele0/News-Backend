@@ -9,4 +9,7 @@ public interface NewsRepository {
   List<News> allNews();
 //  News findNews(Integer id);
   void deleteNews(Integer id);
+  List<News> lastTen();
+  List<News> mostRead();
+  List<News> byCategory(Integer id);
 }

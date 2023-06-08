@@ -20,18 +20,13 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
 
       String[] generatedColumns = {"id"};
 
-      //      preparedStatement = connection.prepareStatement("INSERT INTO news (title, text, time_created, author) VALUES(?, ?, ?, ?)", generatedColumns);
       preparedStatement = connection.prepareStatement("INSERT INTO news (title, text, time_created, author, view_count, category_id) VALUES(?, ?, ?, ?, ?, ?)", generatedColumns);
       preparedStatement.setString(1, news.getTitle());
       preparedStatement.setString(2, news.getText());
       preparedStatement.setTimestamp(3, news.getTimeCreated());
       preparedStatement.setString(4, news.getAuthor());
       preparedStatement.setInt(5, news.getViewCount());
-
-      //change this line
-      preparedStatement.setInt(6, 1);
-      //TODO change this category
-      news.setCategory(new Category(1));
+      preparedStatement.setInt(6, news.getCategory().getId());
 
       preparedStatement.executeUpdate();
       resultSet = preparedStatement.getGeneratedKeys();
@@ -51,6 +46,23 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
     return news;
   }
 
+  private Category getCategory(Connection connection, int categoryId) throws Exception {
+    Category category = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSetCategory = null;
+    preparedStatement = connection.prepareStatement("select * from category where id = ?");
+    preparedStatement.setInt(1, categoryId);
+    resultSetCategory = preparedStatement.executeQuery();
+
+    if (resultSetCategory.next()) {
+      int id = resultSetCategory.getInt("id");
+      String name = resultSetCategory.getString("name");
+      String description = resultSetCategory.getString("description");
+      category = new Category(id, name, description);
+    }
+    return category;
+  }
+
   @Override
   public List<News> allNews() {
     List<News> news = new ArrayList<>();
@@ -61,10 +73,12 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
     try {
       connection = this.newConnection();
 
-      //TODO dodati kategoriju
       statement = connection.createStatement();
-      resultSet = statement.executeQuery("select * from news");
+      resultSet = statement.executeQuery("select * from news order by time_created desc");
+
       while (resultSet.next()) {
+        Category category = getCategory(connection, resultSet.getInt("category_id"));
+
         news.add(new News(
                 resultSet.getInt("id"),
                 resultSet.getString("title"),
@@ -72,7 +86,7 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
                 resultSet.getTimestamp("time_created"),
                 resultSet.getString("author"),
                 resultSet.getInt("view_count"),
-                new Category(1)));
+                category));
       }
 
     } catch (Exception e) {
@@ -105,5 +119,115 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
       this.closeStatement(preparedStatement);
       this.closeConnection(connection);
     }
+  }
+
+  @Override
+  public List<News> lastTen() {
+    List<News> news = new ArrayList<>();
+
+    Connection connection = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    try {
+      connection = this.newConnection();
+
+      statement = connection.createStatement();
+      resultSet = statement.executeQuery("select * from news order by time_created desc limit 10");
+      while (resultSet.next()) {
+        Category category = getCategory(connection, resultSet.getInt("category_id"));
+        news.add(new News(
+                resultSet.getInt("id"),
+                resultSet.getString("title"),
+                resultSet.getString("text"),
+                resultSet.getTimestamp("time_created"),
+                resultSet.getString("author"),
+                resultSet.getInt("view_count"),
+                category));
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      this.closeStatement(statement);
+      this.closeResultSet(resultSet);
+      this.closeConnection(connection);
+    }
+
+    return news;
+  }
+
+  @Override
+  public List<News> mostRead() {
+    List<News> news = new ArrayList<>();
+
+    Connection connection = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
+    try {
+      connection = this.newConnection();
+
+      statement = connection.createStatement();
+      resultSet = statement.executeQuery("SELECT * FROM news\n" +
+              "WHERE time_created >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)\n" +
+              "ORDER BY view_count DESC\n" +
+              "LIMIT 10");
+      while (resultSet.next()) {
+        Category category = getCategory(connection, resultSet.getInt("category_id"));
+        news.add(new News(
+                resultSet.getInt("id"),
+                resultSet.getString("title"),
+                resultSet.getString("text"),
+                resultSet.getTimestamp("time_created"),
+                resultSet.getString("author"),
+                resultSet.getInt("view_count"),
+                category));
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      this.closeStatement(statement);
+      this.closeResultSet(resultSet);
+      this.closeConnection(connection);
+    }
+
+    return news;
+  }
+
+  @Override
+  public List<News> byCategory(Integer id) {
+    List<News> news = new ArrayList<>();
+
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    try {
+      connection = this.newConnection();
+
+      preparedStatement = connection.prepareStatement("select * from news where category_id = ?");
+      preparedStatement.setInt(1, id);
+      resultSet = preparedStatement.executeQuery();
+
+      while (resultSet.next()) {
+        Category category = getCategory(connection, resultSet.getInt("category_id"));
+        news.add(new News(
+                resultSet.getInt("id"),
+                resultSet.getString("title"),
+                resultSet.getString("text"),
+                resultSet.getTimestamp("time_created"),
+                resultSet.getString("author"),
+                resultSet.getInt("view_count"),
+                category));
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      this.closeStatement(preparedStatement);
+      this.closeResultSet(resultSet);
+      this.closeConnection(connection);
+    }
+
+    return news;
   }
 }
