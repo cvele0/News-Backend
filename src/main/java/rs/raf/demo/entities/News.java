@@ -2,6 +2,7 @@ package rs.raf.demo.entities;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class News {
@@ -16,8 +17,7 @@ public class News {
   private String text;
 
   @NotNull(message = "Time created field is required")
-  @NotEmpty(message = "Time created field is required")
-  private String timeCreated;
+  private Timestamp timeCreated;
 
   @NotNull(message = "Author field is required")
   @NotEmpty(message = "Author field is required")
@@ -33,23 +33,31 @@ public class News {
 
   public News() {}
 
-  public News(Integer id, String title, String text, String timeCreated, String author, Category category) {
+  public News(Integer id, String title, String text, Timestamp timeCreated, String author, int viewCount, Category category) {
     this.id = id;
     this.title = title;
     this.text = text;
     this.timeCreated = timeCreated;
     this.author = author;
+    this.viewCount = viewCount;
     this.category = category;
-    this.viewCount = 0;
   }
 
   //2nd version
-  public News(Integer id, String title, String text, String timeCreated, String author) {
+  public News(Integer id, String title, String text, Timestamp timeCreated, String author) {
     this.id = id;
     this.title = title;
     this.text = text;
     this.timeCreated = timeCreated;
     this.author = author;
+  }
+
+  public int getViewCount() {
+    return viewCount;
+  }
+
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
   }
 
   public void setId(Integer id) {
@@ -76,11 +84,11 @@ public class News {
     this.text = text;
   }
 
-  public String getTimeCreated() {
+  public Timestamp getTimeCreated() {
     return timeCreated;
   }
 
-  public void setTimeCreated(String timeCreated) {
+  public void setTimeCreated(Timestamp timeCreated) {
     this.timeCreated = timeCreated;
   }
 

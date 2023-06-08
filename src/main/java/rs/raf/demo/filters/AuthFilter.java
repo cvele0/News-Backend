@@ -1,9 +1,7 @@
 package rs.raf.demo.filters;
 
-import rs.raf.demo.resources.SubjectResource;
 //import rs.raf.demo.services.UserService;
 
-import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
@@ -47,9 +45,9 @@ public class AuthFilter implements ContainerRequestFilter {
 
         List<Object> matchedResources = req.getUriInfo().getMatchedResources();
         for (Object matchedResource : matchedResources) {
-            if (matchedResource instanceof SubjectResource) {
-                return true;
-            }
+//            if (matchedResource instanceof SubjectResource) {
+//                return true;
+//            }
         }
 
         return false;

@@ -20,17 +20,18 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
 
       String[] generatedColumns = {"id"};
 
-//      preparedStatement = connection.prepareStatement("INSERT INTO news (title, text, time_created, author) VALUES(?, ?, ?, ?)", generatedColumns);
-      preparedStatement = connection.prepareStatement("INSERT INTO news (title, text, time_created, author, category_id) VALUES(?, ?, ?, ?, ?)", generatedColumns);
+      //      preparedStatement = connection.prepareStatement("INSERT INTO news (title, text, time_created, author) VALUES(?, ?, ?, ?)", generatedColumns);
+      preparedStatement = connection.prepareStatement("INSERT INTO news (title, text, time_created, author, view_count, category_id) VALUES(?, ?, ?, ?, ?, ?)", generatedColumns);
       preparedStatement.setString(1, news.getTitle());
       preparedStatement.setString(2, news.getText());
-      preparedStatement.setString(3, news.getTimeCreated());
+      preparedStatement.setTimestamp(3, news.getTimeCreated());
       preparedStatement.setString(4, news.getAuthor());
-      //change this line
-      preparedStatement.setInt(5, 1);
+      preparedStatement.setInt(5, news.getViewCount());
 
+      //change this line
+      preparedStatement.setInt(6, 1);
       //TODO change this category
-      news.setCategory(new Category(0));
+      news.setCategory(new Category(1));
 
       preparedStatement.executeUpdate();
       resultSet = preparedStatement.getGeneratedKeys();
@@ -64,10 +65,14 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
       statement = connection.createStatement();
       resultSet = statement.executeQuery("select * from news");
       while (resultSet.next()) {
-        news.add(new News(resultSet.getInt("id"), resultSet.getString("title"),
+        news.add(new News(
+                resultSet.getInt("id"),
+                resultSet.getString("title"),
                 resultSet.getString("text"),
-                resultSet.getString("time_created"),
-                resultSet.getString("author")));
+                resultSet.getTimestamp("time_created"),
+                resultSet.getString("author"),
+                resultSet.getInt("view_count"),
+                new Category(1)));
       }
 
     } catch (Exception e) {

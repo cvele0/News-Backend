@@ -2,7 +2,6 @@ package rs.raf.demo.entities;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalTime;
 
 public class Comment {
   private Integer id;

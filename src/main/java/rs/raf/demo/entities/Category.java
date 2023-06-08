@@ -18,6 +18,8 @@ public class Category {
 
   public Category(Integer id) {
     this.id = id;
+    this.name = "Nesto random";
+    this.description = "Random deskripcija";
   }
 
   public Category(Integer id, String name, String description) {
