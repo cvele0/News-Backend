@@ -2,6 +2,7 @@ package rs.raf.demo.entities;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 
 public class Comment {
   private Integer id;
@@ -14,17 +15,13 @@ public class Comment {
   @NotEmpty(message = "Text field is required")
   private String text;
 
-  @NotNull(message = "Time Created field is required")
-  @NotEmpty(message = "Time Created field is required")
-  private String timeCreated;
+  private Timestamp timeCreated;
 
-  @NotNull(message = "News field is required")
-  @NotEmpty(message = "News field is required")
   private News news;
 
   public Comment() {}
 
-  public Comment(Integer id, String author, String text, String timeCreated, News news) {
+  public Comment(Integer id, String author, String text, Timestamp timeCreated, News news) {
     this.id = id;
     this.author = author;
     this.text = text;
@@ -56,11 +53,11 @@ public class Comment {
     this.text = text;
   }
 
-  public String getTimeCreated() {
+  public Timestamp getTimeCreated() {
     return timeCreated;
   }
 
-  public void setTimeCreated(String timeCreated) {
+  public void setTimeCreated(Timestamp timeCreated) {
     this.timeCreated = timeCreated;
   }
 

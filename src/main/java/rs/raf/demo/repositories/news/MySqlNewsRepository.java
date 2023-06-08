@@ -230,4 +230,41 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
 
     return news;
   }
+
+  @Override
+  public News getNews(Integer id) {
+    News news = null;
+
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    try {
+      connection = this.newConnection();
+
+      preparedStatement = connection.prepareStatement("select * from news where id = ?");
+      preparedStatement.setInt(1, id);
+      resultSet = preparedStatement.executeQuery();
+
+      while (resultSet.next()) {
+        Category category = getCategory(connection, resultSet.getInt("category_id"));
+        news = new News(
+                resultSet.getInt("id"),
+                resultSet.getString("title"),
+                resultSet.getString("text"),
+                resultSet.getTimestamp("time_created"),
+                resultSet.getString("author"),
+                resultSet.getInt("view_count"),
+                category);
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      this.closeStatement(preparedStatement);
+      this.closeResultSet(resultSet);
+      this.closeConnection(connection);
+    }
+
+    return news;
+  }
 }

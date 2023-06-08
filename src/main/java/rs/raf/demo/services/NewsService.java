@@ -39,4 +39,7 @@ public class NewsService {
   public List<News> byCategory(Integer id) {
     return this.newsRepository.byCategory(id);
   }
+  public News getNews(Integer id) {
+    return this.newsRepository.getNews(id);
+  }
 }

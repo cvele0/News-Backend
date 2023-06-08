@@ -12,4 +12,5 @@ public interface NewsRepository {
   List<News> lastTen();
   List<News> mostRead();
   List<News> byCategory(Integer id);
+  News getNews(Integer id);
 }

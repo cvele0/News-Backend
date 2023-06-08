@@ -30,7 +30,7 @@ public class NewsResource {
 //  @GET
 //  @Path("/{id}")
 //  @Produces(MediaType.APPLICATION_JSON)
-//  public Subject find(@PathParam("id") Integer id) {
+//  public News find(@PathParam("id") Integer id) {
 //    return this.newsService.findNews(id);
 //  }
 
@@ -59,5 +59,12 @@ public class NewsResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response byCategory(@PathParam("id") Integer id) {
     return Response.ok(this.newsService.byCategory(id)).build();
+  }
+
+  @GET
+  @Path("/getNews/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getNews(@PathParam("id") Integer id) {
+    return Response.ok(this.newsService.getNews(id)).build();
   }
 }
