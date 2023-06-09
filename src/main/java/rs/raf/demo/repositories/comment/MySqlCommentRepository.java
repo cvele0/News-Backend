@@ -6,6 +6,8 @@ import rs.raf.demo.entities.News;
 import rs.raf.demo.repositories.MySqlAbstractRepository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MySqlCommentRepository extends MySqlAbstractRepository implements CommentRepository {
   @Override
@@ -107,8 +109,8 @@ public class MySqlCommentRepository extends MySqlAbstractRepository implements C
   }
 
   @Override
-  public Comment byNewsId(Integer id) {
-    Comment comment = null;
+  public List<Comment> byNewsId(Integer id) {
+    List<Comment> comments = new ArrayList<>();
 
     Connection connection = null;
     PreparedStatement preparedStatement = null;
@@ -122,12 +124,12 @@ public class MySqlCommentRepository extends MySqlAbstractRepository implements C
 
       while (resultSet.next()) {
         News news = getNews(connection, id);
-        comment = new Comment(
+        comments.add(new Comment(
                 resultSet.getInt("id"),
                 resultSet.getString("author"),
                 resultSet.getString("text"),
                 resultSet.getTimestamp("timeCreated"),
-                news);
+                news));
       }
 
     } catch (Exception e) {
@@ -138,6 +140,6 @@ public class MySqlCommentRepository extends MySqlAbstractRepository implements C
       this.closeConnection(connection);
     }
 
-    return comment;
+    return comments;
   }
 }

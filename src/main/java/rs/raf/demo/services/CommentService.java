@@ -4,6 +4,7 @@ import rs.raf.demo.entities.Comment;
 import rs.raf.demo.repositories.comment.CommentRepository;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class CommentService {
   public CommentService() {
@@ -17,7 +18,7 @@ public class CommentService {
     return this.commentRepository.addComment(comment);
   }
 
-  public Comment byNewsId(Integer id) {
+  public List<Comment> byNewsId(Integer id) {
     return this.commentRepository.byNewsId(id);
   }
 }

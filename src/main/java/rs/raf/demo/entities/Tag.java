@@ -2,7 +2,6 @@ package rs.raf.demo.entities;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 public class Tag {
   private Integer id;
@@ -10,8 +9,6 @@ public class Tag {
   @NotNull(message = "Name field is required")
   @NotEmpty(message = "Name field is required")
   private String name;
-
-  private List<News> news;
 
   public Tag() {}
 
@@ -34,13 +31,5 @@ public class Tag {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public List<News> getNews() {
-    return news;
-  }
-
-  public void setNews(List<News> news) {
-    this.news = news;
   }
 }
