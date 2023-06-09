@@ -58,4 +58,11 @@ public class CategoryResource {
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Failed to update category").build();
     }
   }
+
+  @GET
+  @Path("/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getCategory(@PathParam("id") Integer id) {
+    return Response.ok(this.categoryService.getCategory(id)).build();
+  }
 }

@@ -114,4 +114,35 @@ public class MySqlCategoryRepository extends MySqlAbstractRepository implements 
       this.closeConnection(connection);
     }
   }
+
+  @Override
+  public Category getCategory(Integer categoryId) {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    Category category = null;
+
+    try {
+      connection = this.newConnection();
+      preparedStatement = connection.prepareStatement("SELECT * FROM category WHERE id = ?");
+      preparedStatement.setInt(1, categoryId);
+      resultSet = preparedStatement.executeQuery();
+
+      if (resultSet.next()) {
+        category = new Category();
+        category.setId(resultSet.getInt("id"));
+        category.setName(resultSet.getString("name"));
+        category.setDescription(resultSet.getString("description"));
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeResultSet(resultSet);
+      this.closeStatement(preparedStatement);
+      this.closeConnection(connection);
+    }
+
+    return category;
+  }
 }

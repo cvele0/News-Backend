@@ -10,4 +10,5 @@ public interface CategoryRepository {
   //  public Category findCategory(Integer id);
   void deleteCategory(Integer id);
   void updateCategory(Category category);
+  Category getCategory(Integer id);
 }

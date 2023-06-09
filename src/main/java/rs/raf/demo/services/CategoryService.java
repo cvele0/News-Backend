@@ -33,4 +33,7 @@ public class CategoryService {
   public void updateCategory(Category category) {
     this.categoryRepository.updateCategory(category);
   }
+  public Category getCategory(Integer id) {
+    return this.categoryRepository.getCategory(id);
+  }
 }
