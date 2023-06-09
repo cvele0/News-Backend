@@ -43,6 +43,14 @@ public class News {
     this.category = category;
   }
 
+  public News(String title, String text, Timestamp timeCreated, String author, Category category) {
+    this.title = title;
+    this.text = text;
+    this.timeCreated = timeCreated;
+    this.author = author;
+    this.category = category;
+  }
+
   //2nd version
   public News(Integer id, String title, String text, Timestamp timeCreated, String author) {
     this.id = id;

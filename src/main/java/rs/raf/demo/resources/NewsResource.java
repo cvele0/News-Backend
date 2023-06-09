@@ -1,5 +1,6 @@
 package rs.raf.demo.resources;
 
+import rs.raf.demo.entities.Category;
 import rs.raf.demo.entities.News;
 import rs.raf.demo.services.NewsService;
 
@@ -73,5 +74,24 @@ public class NewsResource {
   public Response incrementViewCount(@PathParam("id") Integer id, @QueryParam("count") Integer count) {
     this.newsService.incrementViewCount(id, count);
     return Response.ok().build();
+  }
+
+  @PUT
+  @Path("/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response updateNews(@PathParam("id") Integer id,  News news) {
+    try {
+      // Validate the category ID or perform any necessary checks
+
+      // Update the category using the provided category object
+      news.setId(id);
+      newsService.updateNews(news);
+
+      // Return a successful response
+      return Response.ok().build();
+    } catch (Exception e) {
+      // Handle any exceptions or errors
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Failed to update category").build();
+    }
   }
 }

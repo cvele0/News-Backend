@@ -287,4 +287,29 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
       this.closeConnection(connection);
     }
   }
+
+  @Override
+  public void updateNews(News news) {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = this.newConnection();
+
+      preparedStatement = connection.prepareStatement("UPDATE news SET title = ?, text = ?, author = ?, category_id = ? WHERE id = ?");
+      preparedStatement.setString(1, news.getTitle());
+      preparedStatement.setString(2, news.getText());
+      preparedStatement.setString(3, news.getAuthor());
+      preparedStatement.setInt(4, news.getCategory().getId());
+      preparedStatement.setInt(5, news.getId());
+      preparedStatement.executeUpdate();
+
+      preparedStatement.close();
+      connection.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeStatement(preparedStatement);
+      this.closeConnection(connection);
+    }
+  }
 }

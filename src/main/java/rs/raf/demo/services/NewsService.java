@@ -45,4 +45,7 @@ public class NewsService {
   public void incrementViewCount(Integer id, Integer count) {
     this.newsRepository.incrementViewCount(id, count);
   }
+  public void updateNews(News news) {
+    this.newsRepository.updateNews(news);
+  }
 }
