@@ -39,4 +39,23 @@ public class CategoryResource {
   public void delete(@PathParam("id") Integer id) {
     this.categoryService.deleteCategory(id);
   }
+
+  @PUT
+  @Path("/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response updateCategory(@PathParam("id") Integer id, Category category) {
+    try {
+      // Validate the category ID or perform any necessary checks
+
+      // Update the category using the provided category object
+      category.setId(id);
+      categoryService.updateCategory(category);
+
+      // Return a successful response
+      return Response.ok().build();
+    } catch (Exception e) {
+      // Handle any exceptions or errors
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Failed to update category").build();
+    }
+  }
 }

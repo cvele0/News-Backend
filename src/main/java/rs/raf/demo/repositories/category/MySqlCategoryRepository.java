@@ -90,4 +90,28 @@ public class MySqlCategoryRepository extends MySqlAbstractRepository implements 
       this.closeConnection(connection);
     }
   }
+
+  @Override
+  public void updateCategory(Category category) {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = this.newConnection();
+
+      preparedStatement = connection.prepareStatement("UPDATE category SET name = ?, description = ? WHERE id = ?");
+      preparedStatement.setString(1, category.getName());
+      preparedStatement.setString(2, category.getDescription());
+      preparedStatement.setInt(3, category.getId());
+
+      preparedStatement.executeUpdate();
+
+      preparedStatement.close();
+      connection.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeStatement(preparedStatement);
+      this.closeConnection(connection);
+    }
+  }
 }

@@ -24,7 +24,7 @@ public class User {
 
     @NotNull(message = "Status field is required")
     @NotEmpty(message = "Status field is required")
-    private String status;
+    private String status = "active";
 
     @NotNull(message = "Hashed Password field is required")
     @NotEmpty(message = "Hashed Password field is required")

@@ -9,4 +9,5 @@ public interface CategoryRepository {
   List<Category> allCategories();
   //  public Category findCategory(Integer id);
   void deleteCategory(Integer id);
+  void updateCategory(Category category);
 }
