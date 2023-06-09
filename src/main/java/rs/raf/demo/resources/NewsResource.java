@@ -67,4 +67,11 @@ public class NewsResource {
   public Response getNews(@PathParam("id") Integer id) {
     return Response.ok(this.newsService.getNews(id)).build();
   }
+
+  @PUT
+  @Path("/incrementViewCount/{id}")
+  public Response incrementViewCount(@PathParam("id") Integer id, @QueryParam("count") Integer count) {
+    this.newsService.incrementViewCount(id, count);
+    return Response.ok().build();
+  }
 }

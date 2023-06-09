@@ -13,4 +13,5 @@ public interface NewsRepository {
   List<News> mostRead();
   List<News> byCategory(Integer id);
   News getNews(Integer id);
+  void incrementViewCount(Integer id, Integer count);
 }

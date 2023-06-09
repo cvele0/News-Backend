@@ -23,7 +23,7 @@ public class News {
   @NotEmpty(message = "Author field is required")
   private String author;
 
-  private int viewCount;
+  private int viewCount = 0;
 
   private List<Comment> comments;
 

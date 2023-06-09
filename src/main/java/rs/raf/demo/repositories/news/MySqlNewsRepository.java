@@ -267,4 +267,24 @@ public class MySqlNewsRepository extends MySqlAbstractRepository implements News
 
     return news;
   }
+
+  @Override
+  public void incrementViewCount(Integer id, Integer count) {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = this.newConnection();
+
+      preparedStatement = connection.prepareStatement("UPDATE news SET view_count = ? WHERE id = ?");
+      preparedStatement.setInt(1, count);
+      preparedStatement.setInt(2, id);
+      preparedStatement.executeUpdate();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      this.closeStatement(preparedStatement);
+      this.closeConnection(connection);
+    }
+  }
 }
