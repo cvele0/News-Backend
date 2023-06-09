@@ -118,7 +118,7 @@ public class MySqlCommentRepository extends MySqlAbstractRepository implements C
     try {
       connection = this.newConnection();
 
-      preparedStatement = connection.prepareStatement("select * from comment where news_id = ?");
+      preparedStatement = connection.prepareStatement("select * from comment where news_id = ? order by timeCreated desc");
       preparedStatement.setInt(1, id);
       resultSet = preparedStatement.executeQuery();
 
