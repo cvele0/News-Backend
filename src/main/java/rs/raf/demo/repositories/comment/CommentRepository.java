@@ -7,4 +7,5 @@ import java.util.List;
 public interface CommentRepository {
   Comment addComment(Comment comment);
   List<Comment> byNewsId(Integer id);
+  void deleteByNewsId(Integer id);
 }

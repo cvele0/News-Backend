@@ -21,4 +21,7 @@ public class CommentService {
   public List<Comment> byNewsId(Integer id) {
     return this.commentRepository.byNewsId(id);
   }
+  public void deleteByNewsId(Integer id) {
+    this.commentRepository.deleteByNewsId(id);
+  }
 }

@@ -142,4 +142,20 @@ public class MySqlCommentRepository extends MySqlAbstractRepository implements C
 
     return comments;
   }
+  @Override
+  public void deleteByNewsId(Integer newsId) {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = this.newConnection();
+      preparedStatement = connection.prepareStatement("DELETE FROM comment WHERE news_id = ?");
+      preparedStatement.setInt(1, newsId);
+      preparedStatement.executeUpdate();
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      this.closeStatement(preparedStatement);
+      this.closeConnection(connection);
+    }
+  }
 }

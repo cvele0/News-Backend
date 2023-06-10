@@ -27,4 +27,11 @@ public class CommentResource {
   public Response byNewsId(@PathParam("id") Integer id) {
     return Response.ok(this.commentService.byNewsId(id)).build();
   }
+
+  @DELETE
+  @Path("/byNewsId/{id}")
+  public Response deleteByNewsId(@PathParam("id") Integer id) {
+    this.commentService.deleteByNewsId(id);
+    return Response.ok().build();
+  }
 }
