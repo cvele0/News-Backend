@@ -99,4 +99,74 @@ public class MySqlUserRepository extends MySqlAbstractRepository implements User
       this.closeConnection(connection);
     }
   }
+
+  @Override
+  public void updateUser(User user) {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    try {
+      connection = this.newConnection();
+
+      preparedStatement = connection.prepareStatement(
+              "UPDATE user SET name=?, surname=?, email=?, type=?, status=?, hashed_password=? WHERE id=?"
+      );
+      preparedStatement.setString(1, user.getName());
+      preparedStatement.setString(2, user.getSurname());
+      preparedStatement.setString(3, user.getEmail());
+      preparedStatement.setString(4, user.getType());
+      preparedStatement.setString(5, user.getStatus());
+      preparedStatement.setString(6, user.getHashedPassword());
+      preparedStatement.setInt(7, user.getId());
+
+      int affectedRows = preparedStatement.executeUpdate();
+
+      if (affectedRows == 0) {
+        // Update failed
+        throw new SQLException("User update failed, no rows affected.");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+      // Handle the exception as needed
+    } finally {
+      this.closeStatement(preparedStatement);
+      this.closeConnection(connection);
+    }
+  }
+
+  @Override
+  public User getUser(Integer id) {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    User user = null;
+
+    try {
+      connection = this.newConnection();
+
+      preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE id = ?");
+      preparedStatement.setInt(1, id);
+      resultSet = preparedStatement.executeQuery();
+
+      if (resultSet.next()) {
+        user = new User();
+        user.setId(resultSet.getInt("id"));
+        user.setName(resultSet.getString("name"));
+        user.setSurname(resultSet.getString("surname"));
+        user.setEmail(resultSet.getString("email"));
+        user.setType(resultSet.getString("type"));
+        user.setStatus(resultSet.getString("status"));
+        user.setHashedPassword(resultSet.getString("hashed_password"));
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      // Handle the exception as needed
+    } finally {
+      this.closeResultSet(resultSet);
+      this.closeStatement(preparedStatement);
+      this.closeConnection(connection);
+    }
+
+    return user;
+  }
 }

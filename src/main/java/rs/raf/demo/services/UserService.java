@@ -26,4 +26,12 @@ public class UserService {
   public void deleteUser(Integer id) {
     this.userRepository.deleteUser(id);
   }
+
+  public void updateUser(User user) {
+    this.userRepository.updateUser(user);
+  }
+
+  public User getUser(Integer id) {
+    return this.userRepository.getUser(id);
+  }
 }

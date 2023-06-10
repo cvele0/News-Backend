@@ -1,8 +1,6 @@
 package rs.raf.demo.resources;
 
-import rs.raf.demo.entities.News;
 import rs.raf.demo.entities.User;
-import rs.raf.demo.services.NewsService;
 import rs.raf.demo.services.UserService;
 
 import javax.inject.Inject;
@@ -40,5 +38,31 @@ public class UserResource {
   @Path("/{id}")
   public void delete(@PathParam("id") Integer id) {
     this.userService.deleteUser(id);
+  }
+
+  @PUT
+  @Path("/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response updateUser(@PathParam("id") Integer id,  User user) {
+    try {
+      // Validate the category ID or perform any necessary checks
+
+      // Update the category using the provided category object
+      user.setId(id);
+      userService.updateUser(user);
+
+      // Return a successful response
+      return Response.ok().build();
+    } catch (Exception e) {
+      // Handle any exceptions or errors
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Failed to update category").build();
+    }
+  }
+
+  @GET
+  @Path("/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public User getNews(@PathParam("id") Integer id) {
+    return this.userService.getUser(id);
   }
 }
