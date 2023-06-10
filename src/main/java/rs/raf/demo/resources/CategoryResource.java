@@ -27,13 +27,6 @@ public class CategoryResource {
     return this.categoryService.addCategory(category);
   }
 
-//  @GET
-//  @Path("/{id}")
-//  @Produces(MediaType.APPLICATION_JSON)
-//  public Subject find(@PathParam("id") Integer id) {
-//    return this.newsService.findNews(id);
-//  }
-
   @DELETE
   @Path("/{id}")
   public void delete(@PathParam("id") Integer id) {

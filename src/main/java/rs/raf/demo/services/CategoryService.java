@@ -23,10 +23,6 @@ public class CategoryService {
     return this.categoryRepository.allCategories();
   }
 
-//  public Subject findNews(Integer id) {
-//    return this.newsRepository.findNews(id);
-//  }
-
   public void deleteCategory(Integer id) {
     this.categoryRepository.deleteCategory(id);
   }

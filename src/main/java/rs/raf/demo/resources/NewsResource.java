@@ -1,6 +1,5 @@
 package rs.raf.demo.resources;
 
-import rs.raf.demo.entities.Category;
 import rs.raf.demo.entities.News;
 import rs.raf.demo.services.NewsService;
 

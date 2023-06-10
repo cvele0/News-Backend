@@ -5,9 +5,9 @@ import javax.validation.constraints.NotNull;
 
 public class LoginRequest {
 
-    @NotNull(message = "Username is required")
-    @NotEmpty(message = "Username is required")
-    private String username;
+    @NotNull(message = "Name is required")
+    @NotEmpty(message = "Name is required")
+    private String name;
 
     @NotNull(message = "Password is required")
     @NotEmpty(message = "Password is required")
@@ -16,12 +16,12 @@ public class LoginRequest {
     public LoginRequest() {
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {

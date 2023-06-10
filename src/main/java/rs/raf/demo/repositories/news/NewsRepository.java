@@ -7,7 +7,6 @@ import java.util.List;
 public interface NewsRepository {
   News addNews(News news);
   List<News> allNews();
-//  News findNews(Integer id);
   void deleteNews(Integer id);
   List<News> lastTen();
   List<News> mostRead();

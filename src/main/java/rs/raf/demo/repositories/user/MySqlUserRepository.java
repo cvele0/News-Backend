@@ -1,6 +1,6 @@
 package rs.raf.demo.repositories.user;
 
-import rs.raf.demo.entities.News;
+import org.apache.commons.codec.digest.DigestUtils;
 import rs.raf.demo.entities.User;
 import rs.raf.demo.repositories.MySqlAbstractRepository;
 
@@ -21,12 +21,13 @@ public class MySqlUserRepository extends MySqlAbstractRepository implements User
 
       preparedStatement = connection.prepareStatement(
               "INSERT INTO user (name, surname, email, type, status, hashed_password) VALUES(?, ?, ?, ?, ?, ?)", generatedColumns);
+      String realHashedPassword = DigestUtils.sha256Hex(user.getHashedPassword());
       preparedStatement.setString(1, user.getName());
       preparedStatement.setString(2, user.getSurname());
       preparedStatement.setString(3, user.getEmail());
       preparedStatement.setString(4, user.getType());
       preparedStatement.setString(5, user.getStatus());
-      preparedStatement.setString(6, user.getHashedPassword());
+      preparedStatement.setString(6, realHashedPassword);
       preparedStatement.executeUpdate();
       resultSet = preparedStatement.getGeneratedKeys();
 
@@ -110,12 +111,13 @@ public class MySqlUserRepository extends MySqlAbstractRepository implements User
       preparedStatement = connection.prepareStatement(
               "UPDATE user SET name=?, surname=?, email=?, type=?, status=?, hashed_password=? WHERE id=?"
       );
+      String realHashedPassword = DigestUtils.sha256Hex(user.getHashedPassword());
       preparedStatement.setString(1, user.getName());
       preparedStatement.setString(2, user.getSurname());
       preparedStatement.setString(3, user.getEmail());
       preparedStatement.setString(4, user.getType());
       preparedStatement.setString(5, user.getStatus());
-      preparedStatement.setString(6, user.getHashedPassword());
+      preparedStatement.setString(6, realHashedPassword);
       preparedStatement.setInt(7, user.getId());
 
       int affectedRows = preparedStatement.executeUpdate();
@@ -145,6 +147,43 @@ public class MySqlUserRepository extends MySqlAbstractRepository implements User
 
       preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE id = ?");
       preparedStatement.setInt(1, id);
+      resultSet = preparedStatement.executeQuery();
+
+      if (resultSet.next()) {
+        user = new User();
+        user.setId(resultSet.getInt("id"));
+        user.setName(resultSet.getString("name"));
+        user.setSurname(resultSet.getString("surname"));
+        user.setEmail(resultSet.getString("email"));
+        user.setType(resultSet.getString("type"));
+        user.setStatus(resultSet.getString("status"));
+        user.setHashedPassword(resultSet.getString("hashed_password"));
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+      // Handle the exception as needed
+    } finally {
+      this.closeResultSet(resultSet);
+      this.closeStatement(preparedStatement);
+      this.closeConnection(connection);
+    }
+
+    return user;
+  }
+
+  @Override
+  public User findUser(String name) {
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+    User user = null;
+
+    try {
+      connection = this.newConnection();
+
+      preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE name = ?");
+      preparedStatement.setString(1, name);
       resultSet = preparedStatement.executeQuery();
 
       if (resultSet.next()) {

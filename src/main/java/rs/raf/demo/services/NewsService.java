@@ -22,11 +22,6 @@ public class NewsService {
   public List<News> allNews() {
     return this.newsRepository.allNews();
   }
-
-//  public Subject findNews(Integer id) {
-//    return this.newsRepository.findNews(id);
-//  }
-
   public void deleteNews(Integer id) {
     this.newsRepository.deleteNews(id);
   }

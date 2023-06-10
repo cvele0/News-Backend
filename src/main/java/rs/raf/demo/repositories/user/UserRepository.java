@@ -10,4 +10,5 @@ public interface UserRepository {
     void deleteUser(Integer id);
     void updateUser(User user);
     User getUser(Integer id);
+    User findUser(String name);
 }
